@@ -1,0 +1,223 @@
+#!/bin/bash
+ADDON_FOLDER="$HOME/blackfuel/asuswrt-merlin-addon"
+ADDON_STAGING_FOLDER="$ADDON_FOLDER/staging"
+ADDON_STAGING_ENTWARE_FOLDER="$ADDON_STAGING_FOLDER/entware"
+ENTWARE_FOLDER="$HOME/Entware-ng"
+ENTWARE_INSTALL_FOLDER="$ENTWARE_FOLDER/staging_dir/target-arm_cortex-a9_glibc-2.23_eabi/root-armv7soft/opt"
+OBJDUMP="/usr/bin/objdump"
+PATCHELF="$ENTWARE_FOLDER/staging_dir/host/bin/patchelf"
+STRIP="$ENTWARE_FOLDER/staging_dir/toolchain-arm_cortex-a9_gcc-5.3.0_glibc-2.23_eabi/bin/arm-openwrt-linux-strip"
+OLDROOT="/opt"
+NEWPARENT="/entware"
+
+find_library()
+{
+  local LIB_FILE="$1"
+
+  local LIB_PATH="${LIB_HASH["$LIB_FILE"]}"
+  if [ ! -z "$LIB_PATH" ]; then
+    RET_LIB_PATH="$LIB_PATH"
+    return 0
+  else
+    local LIB_PATH="$(find ${ENTWARE_INSTALL_FOLDER} -maxdepth 2 -type l -name $LIB_FILE | head -n 1)"
+    if [ ! -z "$LIB_PATH" ]; then
+      LIB_HASH+=(["${LIB_FILE}"]="${LIB_PATH}")
+      RET_LIB_PATH="$LIB_PATH"
+      return 0
+    else
+      local LIB_PATH="$(find ${ENTWARE_INSTALL_FOLDER} -type l -name $LIB_FILE | head -n 1)"
+      if [ ! -z "$LIB_PATH" ]; then
+        LIB_HASH+=(["${LIB_FILE}"]="${LIB_PATH}")
+        RET_LIB_PATH="$LIB_PATH"
+        return 0
+      else  
+        local LIB_PATH="$(find ${ENTWARE_INSTALL_FOLDER} -maxdepth 2 -type f -name $LIB_FILE | head -n 1)"
+        if [ ! -z "$LIB_PATH" ]; then
+          LIB_HASH+=(["${LIB_FILE}"]="${LIB_PATH}")
+          RET_LIB_PATH="$LIB_PATH"
+          return 0
+        else  
+          local LIB_PATH="$(find ${ENTWARE_INSTALL_FOLDER} -type f -name $LIB_FILE | head -n 1)"
+          if [ ! -z "$LIB_PATH" ]; then
+            LIB_HASH+=(["${LIB_FILE}"]="${LIB_PATH}")
+            RET_LIB_PATH="$LIB_PATH"
+            return 0
+          fi
+        fi
+      fi
+    fi
+  fi
+
+  return 1
+}
+
+walk_depends()
+{
+  local FILE_PATH="$1"
+
+  if [ "${FILE_PATHS#*$FILE_PATH}" == "$FILE_PATHS" ]; then
+    FILE_PATHS="$FILE_PATHS $FILE_PATH"
+  fi
+
+  local LIBS="$($OBJDUMP -p $FILE_PATH 2> /dev/null | /bin/grep "  NEEDED" | /usr/bin/cut -f18 -d' ')"
+
+  local LIB_FILE
+  for LIB_FILE in $LIBS
+  do
+    echo "  Find library $LIB_FILE"
+    find_library "$LIB_FILE"
+    if [ $? -eq 0 ]; then
+      echo "  Found library $RET_LIB_PATH"
+      walk_depends "$RET_LIB_PATH"
+    else
+      /bin/echo "${LIB_FILE} *** missing ***"
+      ERROR=1
+    fi
+  done
+
+  return 0
+}
+
+copy_file()
+{
+  SOURCE_PATH="$1"
+  DEST_FOLDER="$2"
+  local SOURCE_FOLDER="${SOURCE_PATH%/*}"
+  local real_source_path="$(readlink -f ${SOURCE_PATH})"
+  local DEST_PATH="${DEST_FOLDER}/${real_source_path##*/}"
+
+  # make directory
+  /bin/mkdir -p $DEST_FOLDER
+  cd "$DEST_FOLDER"
+
+  # copy the file
+  if [ -f "$SOURCE_PATH" ]; then 
+    if [ ! -f "$DEST_PATH" ]; then
+      /bin/cp -afv "$real_source_path" "${DEST_FOLDER}"
+      $STRIP -v "$DEST_PATH"
+    else
+      /bin/echo "Destination file exists: $DEST_PATH"
+    fi
+  fi
+
+  # follow and copy all links
+  local SOURCE_PATH_TEMP="$SOURCE_PATH"
+  while [ -L "$SOURCE_PATH_TEMP" ]; do
+    local LINK_NAME="${SOURCE_PATH_TEMP##*/}"
+    local LINK_TARGET="$(readlink $SOURCE_PATH_TEMP)"
+    local DEST_PATH="${DEST_FOLDER}/${LINK_NAME}"
+
+    if [ "${LINK_TARGET##*/}" == "$LINK_TARGET" ]; then
+      if [ ! -L "$DEST_PATH" ]; then
+        /bin/cp -afv "${SOURCE_PATH_TEMP}" "${DEST_FOLDER}"
+      else
+        /bin/echo "Destination link exists: $DEST_PATH"
+      fi
+      local SOURCE_PATH_TEMP="${SOURCE_FOLDER}/${LINK_TARGET}"
+    else
+      /bin/echo "Cannot copy a link that points outside the current source folder."
+      return 1
+    fi
+  done
+}
+
+copy_files()
+{
+  local FILE_PATH
+  for FILE_PATH in $FILE_PATHS
+  do
+    local real_file="$(readlink -f $FILE_PATH)"
+    local real_path="${real_file#$ENTWARE_INSTALL_FOLDER}"
+    local staging_path="${ADDON_STAGING_ENTWARE_FOLDER}${real_path}"
+    local staging_folder="${staging_path%/*}"
+
+    /bin/echo "copying .$real_path"
+
+    copy_file $FILE_PATH $staging_folder
+
+    if [ ! -L "$staging_path" ]; then
+
+      local OLD_INTERP="$($PATCHELF --print-interpreter $staging_path 2> /dev/null)"
+      echo "OLD_INTERP=$OLD_INTERP"
+      if [ ! -z "$OLD_INTERP" ]; then
+        local newparent_removed="${OLD_INTERP#$NEWPARENT/}"
+        echo "newparent_removed=$newparent_removed"
+        if [ "$newparent_removed" == "$OLD_INTERP" ]; then
+          local interp_file="${OLD_INTERP##*/}"
+          echo "interp_file=$interp_file"
+          find_library "$interp_file"
+          if [ $? == 0 ]; then
+            echo "RET_LIB_PATH=$RET_LIB_PATH"
+            local real_interp_path="${RET_LIB_PATH#$ENTWARE_INSTALL_FOLDER}"
+            echo "real_interp_path=$real_interp_path"
+            local NEW_INTERP="${NEWPARENT}${real_interp_path}"
+            echo "NEW_INTERP=$NEW_INTERP"
+            echo "staging_path=$staging_path"
+            $PATCHELF --set-interpreter $NEW_INTERP $staging_path
+            echo "patchelf returned $?"
+            $PATCHELF --print-interpreter $staging_path
+          else
+            /bin/echo -n "[interpreter missing: $interp_file]"
+          fi
+        else
+          /bin/echo -n " [interpreter already patched]"
+        fi
+      else
+        /bin/echo -n " [no interpreter]"
+      fi
+
+      local OLD_RPATH="$($PATCHELF --print-rpath $staging_path 2> /dev/null)"
+      if [ ! -z "$OLD_RPATH" ]; then
+        if [ "${OLD_RPATH#$NEWPARENT/}" == "$OLD_RPATH" ]; then
+          local NEW_RPATH="${NEWPARENT}${OLD_RPATH#$OLDROOT}"
+          $PATCHELF --set-rpath $NEW_RPATH $staging_path
+        else
+          /bin/echo -n " [rpath already patched]"
+        fi
+      else
+        /bin/echo -n " [no rpath]"
+      fi
+
+#      $STRIP $staging_path
+      /bin/echo
+
+    else
+      /bin/echo "Not a real file: $staging_path"
+    fi
+
+  done
+}
+
+if [ ! -f "$OBJDUMP" ]; then
+  /bin/echo "The objdump program is missing.  Please install it."
+  /bin/echo "Example:"
+  /bin/echo "$ opkg update"
+  /bin/echo "$ opkg install objdump"
+  exit 1
+fi
+  
+if [ ! -f "$PATCHELF" ]; then
+  /bin/echo "The patchelf program is missing.  Please install it."
+  exit 1
+fi
+  
+FILENAME="$1"
+echo "Processing file $FILENAME"
+if [ -f "$FILENAME" ]; then
+  #declare -A LIB_HASH
+  ERROR=0
+  $OBJDUMP -p $FILENAME > /dev/null 2>&1
+  if [ $? == 0 ]; then
+    FILE_PATHS=""
+    echo "Walk depends for $FILENAME"
+    walk_depends "$FILENAME"
+  
+    if [ $ERROR == 0 ]; then
+      echo "Copy files for $FILENAME"
+      copy_files
+    fi
+  else
+    /bin/echo "skipping $FILENAME [not an ELF executable]"
+  fi
+fi
+
