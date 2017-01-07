@@ -10,9 +10,12 @@
 ADDON_FOLDER="$HOME/blackfuel/asuswrt-merlin-addon"
 ADDON_STAGING_FOLDER="$ADDON_FOLDER/staging"
 ADDON_STAGING_ENTWARE_FOLDER="$ADDON_STAGING_FOLDER/entware"
-ENTWARE_NETWORK="//192.168.204.131/entware-ng"
+ENTWARE_NETWORK="//192.168.234.133/entware-ng"
 ENTWARE_FOLDER="$HOME/Entware-ng"
 ENTWARE_INSTALL_FOLDER="$ENTWARE_FOLDER/staging_dir/target-arm_cortex-a9_glibc-2.23_eabi/root-armv7soft/opt"
+
+$HOME/blackfuel/asuswrt-merlin-tools/install attach
+$HOME/blackfuel/asuswrt-merlin-tools/cp attach
 
 # connect to the Entware-NG build machine
 if [ ! -d "$ENTWARE_INSTALL_FOLDER" ]; then
@@ -27,13 +30,12 @@ fi
 # copy selected programs, libraries and their dependencies from Entware-NG
 mkdir -p $ADDON_STAGING_FOLDER
 cd $ADDON_STAGING_FOLDER
-
 rm -rf $ADDON_STAGING_ENTWARE_FOLDER
 mkdir -p sbin
 cd sbin
 ln -s /entware/sbin/dmsetup dmsetup
-cd $ADDON_FOLDER
 
+cd $ADDON_FOLDER
 declare -A LIB_HASH
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/lib/libnss_dns.so.2
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/lib/libnss_files.so.2
@@ -48,6 +50,7 @@ source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/ffserver
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/find
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/hostip
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/htop
+source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/iostat
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/lsblk
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/lsof
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/md5sum
@@ -63,6 +66,7 @@ source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/sha224sum
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/sha256sum
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/sha384sum
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/sha512sum
+source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/stat
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/tftp-hpa
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/strip
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/stty
@@ -154,3 +158,11 @@ chmod -R 0755 $ADDON_STAGING_FOLDER/*
 
 # disconnect from the Entware-NG build machine
 sudo umount $ENTWARE_FOLDER
+
+
+# set file permissions
+cd $ADDON_STAGING_FOLDER/sbin
+chmod u=rx,g=,o= halt reboot
+
+$HOME/blackfuel/asuswrt-merlin-tools/install detach
+$HOME/blackfuel/asuswrt-merlin-tools/cp detach

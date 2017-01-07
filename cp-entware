@@ -6,7 +6,7 @@ ENTWARE_FOLDER="$HOME/Entware-ng"
 ENTWARE_INSTALL_FOLDER="$ENTWARE_FOLDER/staging_dir/target-arm_cortex-a9_glibc-2.23_eabi/root-armv7soft/opt"
 OBJDUMP="/usr/bin/objdump"
 PATCHELF="$ENTWARE_FOLDER/staging_dir/host/bin/patchelf"
-STRIP="$ENTWARE_FOLDER/staging_dir/toolchain-arm_cortex-a9_gcc-5.3.0_glibc-2.23_eabi/bin/arm-openwrt-linux-strip"
+STRIP="$ENTWARE_FOLDER/staging_dir/toolchain-arm_cortex-a9_gcc-5.4.0_glibc-2.23_eabi/bin/arm-openwrt-linux-strip"
 OLDROOT="/opt"
 NEWPARENT="/entware"
 
