@@ -94,6 +94,7 @@ source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/fallocate
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/fdformat
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/hexdump
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/ldattach
+source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/losetup
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/lvchange
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/lvconvert
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/lvcreate

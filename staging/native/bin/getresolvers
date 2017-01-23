@@ -1,0 +1,2 @@
+#!/bin/sh
+curl -L -O https://download.dnscrypt.org/dnscrypt-proxy/dnscrypt-resolvers.csv
