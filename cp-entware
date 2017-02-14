@@ -6,7 +6,7 @@ ENTWARE_FOLDER="$HOME/Entware-ng"
 ENTWARE_INSTALL_FOLDER="$ENTWARE_FOLDER/staging_dir/target-arm_cortex-a9_glibc-2.23_eabi/root-armv7soft/opt"
 OBJDUMP="/usr/bin/objdump"
 PATCHELF="$ENTWARE_FOLDER/staging_dir/host/bin/patchelf"
-STRIP="$ENTWARE_FOLDER/staging_dir/toolchain-arm_cortex-a9_gcc-5.4.0_glibc-2.23_eabi/bin/arm-openwrt-linux-strip"
+STRIP="$ENTWARE_FOLDER/staging_dir/toolchain-arm_cortex-a9_gcc-6.3.0_glibc-2.23_eabi/bin/arm-openwrt-linux-strip"
 OLDROOT="/opt"
 NEWPARENT="/entware"
 
@@ -201,6 +201,11 @@ if [ ! -f "$PATCHELF" ]; then
   exit 1
 fi
   
+if [ ! -f "$STRIP" ]; then
+  /bin/echo "The strip program is missing.  Please install it."
+  exit 1
+fi
+
 FILENAME="$1"
 echo "Processing file $FILENAME"
 if [ -f "$FILENAME" ]; then
@@ -217,7 +222,9 @@ if [ -f "$FILENAME" ]; then
       copy_files
     fi
   else
-    /bin/echo "skipping $FILENAME [not an ELF executable]"
+    /bin/echo "Copying $FILENAME [not an ELF executable]"
+    FILE_PATHS="$FILENAME"
+    copy_files
   fi
 fi
 

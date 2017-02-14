@@ -44,9 +44,6 @@ source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/bzip2
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/cksum
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/curl
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/dos2unix
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/ffmpeg
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/ffprobe
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/ffserver
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/find
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/hostip
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/htop
@@ -54,8 +51,6 @@ source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/iostat
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/lsblk
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/lsof
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/md5sum
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/minidlna
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/movgrab
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/objcopy
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/objdump
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/openssl
@@ -89,7 +84,6 @@ source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/apcaccess
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/apctest
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/apcupsd
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/cryptsetup
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/dnscrypt-proxy
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/fallocate
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/fdformat
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/hexdump
@@ -113,12 +107,6 @@ source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/lvrename
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/lvresize
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/lvs
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/lvscan
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/ntp-keygen
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/ntpd
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/ntpdate
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/ntpdc
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/ntpq
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/ntptime
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/privoxy
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/pvchange
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/pvck
@@ -132,7 +120,6 @@ source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/pvscan
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/screen
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/tcpdump
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/tftpd-hpa
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/tor
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/uuidd
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/veritysetup
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/vgcfgbackup
