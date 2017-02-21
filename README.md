@@ -10,5 +10,5 @@ Any pre-built app may be compiled into the firmware image.  This allows you to r
 The technique for doing this is a set of tools that change the library root folder for each selected program and its dependencies, from "/opt" to "/entware", "/optware", "/native", or some other root folder name.
 
 
-#### Donations: Any amount will help.  Thank you.
-Bitcoin: 1i5Tpno73gJdr1XdmoxT6CjVFGef5KkZM
+#### Donations may be sent to my Bitcoin address: 1i5Tpno73gJdr1XdmoxT6CjVFGef5KkZM
+Any amount is appreciated.  This helps me share new material with you, and pay the bills.  Thank you.
