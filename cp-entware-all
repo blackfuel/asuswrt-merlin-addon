@@ -44,6 +44,7 @@ source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/bzip2
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/cksum
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/curl
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/dos2unix
+source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/esniper
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/find
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/hostip
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/htop
