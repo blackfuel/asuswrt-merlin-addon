@@ -73,7 +73,6 @@ source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/unrar
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/unzip
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/unzipfx
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/uuidgen
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/vim
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/whoami
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/xxd
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/zip
