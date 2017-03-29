@@ -1,0 +1,5 @@
+#!/bin/sh
+[ -x /jffs/home/system-stop ] && source /jffs/home/system-stop
+[ -d /tmp/halt ] && /bin/rm -rf /tmp/halt
+[ -e /tmp/halt ] && /bin/rm -f /tmp/halt
+/bin/ln -sf /sbin/rc /tmp/halt && /tmp/halt

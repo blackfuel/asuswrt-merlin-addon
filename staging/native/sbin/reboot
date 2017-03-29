@@ -1,0 +1,5 @@
+#!/bin/sh
+[ -x /jffs/home/system-stop ] && source /jffs/home/system-stop
+[ -d /tmp/reboot ] && /bin/rm -rf /tmp/reboot
+[ -e /tmp/reboot ] && /bin/rm -f /tmp/reboot
+/bin/ln -sf /sbin/rc /tmp/reboot && /tmp/reboot
