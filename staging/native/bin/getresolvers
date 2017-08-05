@@ -1,2 +1,16 @@
 #!/bin/sh
-curl -L -O https://download.dnscrypt.org/dnscrypt-proxy/dnscrypt-resolvers.csv
+FILENAME="dnscrypt-resolvers.csv"
+
+echo
+echo "Downloading $FILENAME..."
+rm -f $FILENAME
+curl --silent -L -O https://download.dnscrypt.org/dnscrypt-proxy/$FILENAME
+
+DNS_COUNT=$(cat $FILENAME | sed -r ':a;s/^(([^"]*,?|"[^",]*",?)*"[^",]*),/\1/;ta' | cut -s -d, -f13 | cut -s -d: -f16 | wc -w)
+
+if [ $DNS_COUNT -ge 10 ]; then
+  echo "Found $DNS_COUNT resolvers"
+else
+  echo "There was a problem downloading the list of resolvers."
+fi
+
