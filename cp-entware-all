@@ -71,7 +71,6 @@ source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/unix2dos
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/unrar
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/unzip
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/unzipfx
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/whoami
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/xxd
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/zip
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/apcaccess
@@ -81,7 +80,6 @@ source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/privoxy
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/screen
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/tcpdump
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/tftpd-hpa
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/whois
 chmod -R 0755 $ADDON_STAGING_FOLDER/*
 
 # disconnect from the Entware-NG build machine
