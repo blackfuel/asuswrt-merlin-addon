@@ -31,50 +31,32 @@ fi
 mkdir -p $ADDON_STAGING_FOLDER
 cd $ADDON_STAGING_FOLDER
 rm -rf $ADDON_STAGING_ENTWARE_FOLDER
-mkdir -p sbin
-cd sbin
-ln -s /entware/sbin/dmsetup dmsetup
 
 cd $ADDON_FOLDER
 declare -A LIB_HASH
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/lib/libnss_dns.so.2
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/lib/libnss_files.so.2
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/base64
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/bzip2
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/cksum
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/curl
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/dos2unix
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/esniper
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/hostip
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/htop
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/iostat
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/lsblk
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/lsof
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/md5sum
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/objcopy
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/objdump
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/readelf
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/rsync
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/sha1sum
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/sha224sum
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/sha256sum
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/sha384sum
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/sha512sum
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/stat
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/tftp-hpa
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/strip
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/stty
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/sum
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/tar
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/unix2dos
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/unrar
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/unzip
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/unzipfx
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/xxd
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/zip
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/apcaccess
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/apctest
-source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/apcupsd
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/privoxy
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/screen
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/sbin/tcpdump
