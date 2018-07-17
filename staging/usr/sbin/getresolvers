@@ -4,7 +4,7 @@ FILENAME="dnscrypt-resolvers.csv"
 echo
 echo "Downloading $FILENAME..."
 rm -f $FILENAME
-curl --silent -L -O https://download.dnscrypt.org/dnscrypt-proxy/$FILENAME
+curl --silent -L -O https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v1/$FILENAME
 
 DNS_COUNT=$(cat $FILENAME | sed -r ':a;s/^(([^"]*,?|"[^",]*",?)*"[^",]*),/\1/;ta' | cut -s -d, -f13 | cut -s -d: -f16 | wc -w)
 

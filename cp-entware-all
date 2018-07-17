@@ -5,14 +5,31 @@
 # Asuswrt-Merlin firmware.  It requires an Entware-NG build environment with 
 # all selected packages pre-compiled.
 
+ENTWARE_CONFIG="entware-armv7-2.6"
+#ENTWARE_CONFIG="entware-armv7-3.2"
+#ENTWARE_CONFIG="entware-aarch64-3.10"
+
 #cd $HOME/blackfuel
 #ln -sf ../asuswrt-merlin-addon asuswrt-merlin-addon
 ADDON_FOLDER="$HOME/blackfuel/asuswrt-merlin-addon"
-ADDON_STAGING_FOLDER="$ADDON_FOLDER/staging"
+ADDON_STAGING_FOLDER="$ADDON_FOLDER/$ENTWARE_CONFIG"
 ADDON_STAGING_ENTWARE_FOLDER="$ADDON_STAGING_FOLDER/entware"
-ENTWARE_NETWORK="//192.168.234.133/entware-ng"
-ENTWARE_FOLDER="$HOME/Entware-ng"
-ENTWARE_INSTALL_FOLDER="$ENTWARE_FOLDER/staging_dir/target-arm_cortex-a9_glibc-2.23_eabi/root-armv7soft/opt"
+ENTWARE_NETWORK="//192.168.162.128/entware"
+ENTWARE_FOLDER="$HOME/Entware-remote"
+
+if [ "$ENTWARE_CONFIG" == "entware-armv7-2.6" ]; then
+  ENTWARE_INSTALL_FOLDER="$ENTWARE_FOLDER/staging_dir/target-arm_cortex-a9_glibc-2.23_eabi/root-armv7-2.6/opt"
+  STRIP="$ENTWARE_FOLDER/staging_dir/toolchain-arm_cortex-a9_gcc-7.3.0_glibc-2.23_eabi/bin/arm-openwrt-linux-strip"
+  PATCHELF="$ENTWARE_FOLDER/staging_dir/host/bin/patchelf"
+elif [ "$ENTWARE_CONFIG" == "entware-armv7-3.2" ]; then
+  ENTWARE_INSTALL_FOLDER="$ENTWARE_FOLDER/staging_dir/target-arm_cortex-a9_glibc-2.27_eabi/root-armv7-3.2/opt"
+  STRIP="$ENTWARE_FOLDER/staging_dir/toolchain-arm_cortex-a9_gcc-7.3.0_glibc-2.27_eabi/bin/arm-openwrt-linux-strip"
+  PATCHELF="$ENTWARE_FOLDER/staging_dir/host/bin/patchelf"
+elif [ "$ENTWARE_CONFIG" == "entware-aarch64-3.10" ]; then
+  ENTWARE_INSTALL_FOLDER="$ENTWARE_FOLDER/staging_dir/target-aarch64_cortex-a53_glibc-2.27/root-aarch64-3.10/opt"
+  STRIP="$ENTWARE_FOLDER/staging_dir/toolchain-aarch64_cortex-a53_gcc-7.3.0_glibc-2.27/bin/aarch64-openwrt-linux-gnu-strip"
+  PATCHELF="$ENTWARE_FOLDER/staging_dir/host/bin/patchelf"
+fi
 
 $HOME/blackfuel/asuswrt-merlin-tools/install attach
 $HOME/blackfuel/asuswrt-merlin-tools/cp attach
@@ -20,7 +37,7 @@ $HOME/blackfuel/asuswrt-merlin-tools/cp attach
 # connect to the Entware-NG build machine
 if [ ! -d "$ENTWARE_INSTALL_FOLDER" ]; then
   mkdir -p $ENTWARE_FOLDER
-  sudo mount -t cifs -o user=guest $ENTWARE_NETWORK $ENTWARE_FOLDER
+  sudo mount -t cifs -o guest $ENTWARE_NETWORK $ENTWARE_FOLDER
 
   if [ ! -d "$ENTWARE_INSTALL_FOLDER" ]; then
     exit 1
@@ -39,6 +56,7 @@ source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/lib/libnss_files.so.2
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/bzip2
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/cksum
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/esniper
+source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/file
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/htop
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/iostat
 source $ADDON_FOLDER/cp-entware $ENTWARE_INSTALL_FOLDER/bin/lsblk
@@ -68,8 +86,8 @@ sudo umount $ENTWARE_FOLDER
 
 
 # set file permissions
-cd $ADDON_STAGING_FOLDER/sbin
-chmod u=rx,g=,o= halt reboot
+#cd $ADDON_STAGING_FOLDER/sbin
+#chmod u=rx,g=,o= halt reboot
 
 $HOME/blackfuel/asuswrt-merlin-tools/install detach
 $HOME/blackfuel/asuswrt-merlin-tools/cp detach

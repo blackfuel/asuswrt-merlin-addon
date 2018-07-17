@@ -1,12 +1,12 @@
 #!/bin/bash
-ADDON_FOLDER="$HOME/blackfuel/asuswrt-merlin-addon"
-ADDON_STAGING_FOLDER="$ADDON_FOLDER/staging"
-ADDON_STAGING_ENTWARE_FOLDER="$ADDON_STAGING_FOLDER/entware"
-ENTWARE_FOLDER="$HOME/Entware-ng"
-ENTWARE_INSTALL_FOLDER="$ENTWARE_FOLDER/staging_dir/target-arm_cortex-a9_glibc-2.23_eabi/root-armv7soft/opt"
+#ADDON_FOLDER="$HOME/blackfuel/asuswrt-merlin-addon"
+#ADDON_STAGING_FOLDER="$ADDON_FOLDER/staging"
+#ADDON_STAGING_ENTWARE_FOLDER="$ADDON_STAGING_FOLDER/entware"
+#ENTWARE_FOLDER="$HOME/Entware-opt"
+#ENTWARE_INSTALL_FOLDER="$ENTWARE_FOLDER/staging_dir/target-arm_cortex-a9_glibc-2.23_eabi/root-armv7soft/opt"
 OBJDUMP="/usr/bin/objdump"
-PATCHELF="$ENTWARE_FOLDER/staging_dir/host/bin/patchelf"
-STRIP="$ENTWARE_FOLDER/staging_dir/toolchain-arm_cortex-a9_gcc-6.3.0_glibc-2.23_eabi/bin/arm-openwrt-linux-strip"
+#PATCHELF="$ENTWARE_FOLDER/staging_dir/host/bin/patchelf"
+#STRIP="$ENTWARE_FOLDER/staging_dir/toolchain-arm_cortex-a9_gcc-6.3.0_glibc-2.23_eabi/bin/arm-openwrt-linux-strip"
 OLDROOT="/opt"
 NEWPARENT="/entware"
 
@@ -198,11 +198,13 @@ fi
   
 if [ ! -f "$PATCHELF" ]; then
   /bin/echo "The patchelf program is missing.  Please install it."
+  echo $PATCHELF
   exit 1
 fi
   
 if [ ! -f "$STRIP" ]; then
   /bin/echo "The strip program is missing.  Please install it."
+  echo $STRIP
   exit 1
 fi
 
